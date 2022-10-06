@@ -62,8 +62,7 @@ _start:
     call print_string
     pop rdi
     call string_length
-    add rdi, rax
-    inc rdi
+    lea rdi, [rdi+rax+1]
     call print_string
     call print_newline
 
@@ -72,6 +71,6 @@ _start:
     mov rdi, error_not_found_msg
     call print_error
 .exit:
-    add rsp, MAX_KEY_LENGTH+1
+    add rsp, BUFFER_SIZE
     xor rdi, rdi
     call exit
