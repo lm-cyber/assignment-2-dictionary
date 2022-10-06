@@ -1,4 +1,4 @@
-%define MAX_KEY_LENGTH 255
+%define BUFFER_SIZE 256
 
 extern read_char
 extern print_string
@@ -23,7 +23,7 @@ _start:
     call print_string
 
     xor rcx, rcx                 ; Char count
-    sub rsp, MAX_KEY_LENGTH+1    ; Reserve space for input
+    sub rsp, BUFFER_SIZE    ; Reserve space for input
 .read_chars:
     push rcx
     call read_char
@@ -34,8 +34,8 @@ _start:
     cmp rax, 0x0
     je .terminate_input
 
-    cmp rcx, MAX_KEY_LENGTH-1     ; Check for overflow
-    jg .overflow_error
+    cmp rcx, BUFFER_SIZE-1     ; Check for overflow
+    jge .overflow_error
     mov [rsp+rcx], al
     inc rcx
     jmp .read_chars
